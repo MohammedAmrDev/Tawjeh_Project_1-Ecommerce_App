@@ -243,4 +243,12 @@ wwwroot\plugins\sweetalert2\sweetalert2.min.css
 wwwroot\plugins\sweetalert2\sweetalert2.min.js
 wwwroot\shoppingcart\index.html
 wwwroot\shoppingcart\style.css
+wwwroot\uploads\products\0efa013f-bf59-4d82-9742-438811a277a8.jpg
+wwwroot\uploads\products\16afe038-8004-4915-b207-b1b2f59f11a3.jpg
+wwwroot\uploads\products\29f79156-b6e3-4ab5-8abc-454221674a6b.jpg
+wwwroot\uploads\products\4beaac81-6f04-4b64-92f9-4e7e3bc41e84.jpg
+wwwroot\uploads\products\6737380b-614c-42ca-a849-764e038064cb.jpg
+wwwroot\uploads\products\6df66e7b-b27a-4543-b614-3e44bf76080f.jpg
+wwwroot\uploads\products\8de22730-1ae1-4ca8-b04e-633b45afa272.png
+wwwroot\uploads\products\bd5dd13b-b279-47de-98f1-f3deb4703937.jpg
 wwwroot\uploads\products\placeholder.jpg

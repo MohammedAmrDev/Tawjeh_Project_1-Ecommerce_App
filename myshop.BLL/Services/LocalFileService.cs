@@ -14,7 +14,7 @@ namespace myshop.BLL.Services
 			_webHostEnvironment = webHostEnvironment;
 		}
 
-		public string UploadImage(IFormFile file)
+		public string UploadFile(IFormFile file)
 		{
 			string RootPath = _webHostEnvironment.WebRootPath;
 			
@@ -28,7 +28,7 @@ namespace myshop.BLL.Services
 			}
 			return FileSettings.ProductsImagePath + filename + ext;
 		}
-		public bool DeleteImage(string imageURL)
+		public bool DeleteFile(string imageURL)
 		{
 			string RootPath = _webHostEnvironment.WebRootPath;
 			var oldimg = Path.Combine(RootPath, imageURL.TrimStart('\\'));

@@ -35,6 +35,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Desktop/M0h@mm3d/C\# Projects/ShopHub-Startup-Template/myshop.Web/Views/Cart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Desktop/M0h@mm3d/C\# Projects/ShopHub-Startup-Template/myshop.Web/Views/Category/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -53,10 +57,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/Desktop/M0h@mm3d/C\# Projects/ShopHub-Startup-Template/myshop.Web/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[F:/Desktop/M0h@mm3d/C\# Projects/ShopHub-Startup-Template/myshop.Web/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Desktop/M0h@mm3d/C\# Projects/ShopHub-Startup-Template/myshop.Web/Views/Product/Create.cshtml]

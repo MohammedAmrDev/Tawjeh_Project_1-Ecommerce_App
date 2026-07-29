@@ -23,6 +23,12 @@ namespace myshop.Web.Controllers
 			_mailService = mailService;
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> Register()
+		{
+			return View();
+		}
+
 		[HttpPost]
 		public async Task<IActionResult> Register(RegistrationViewModel registrationViewModel)
 		{

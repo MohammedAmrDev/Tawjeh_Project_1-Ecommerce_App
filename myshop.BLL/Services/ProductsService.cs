@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using myshop.BLL.Interfaces;
 using myshop.DAL.Interfaces;
 using myshop.Models.DTOs;
 using myshop.Models.Entities;
 using myshop.Models.ViewModels;
-using System.Linq.Expressions;
 
 namespace myshop.BLL.Services
 {
@@ -38,10 +36,23 @@ namespace myshop.BLL.Services
 			return (data, await _uow.Products.GetCountAsync(), data.Count());
 		}
 
+		public async Task<(List<ProductResponse>, int)> GetAllProducts(string? searchBy, int? categoryId, string? sortBy, bool isDsc, int pageIndex, int length)
+		{
+			var products = await _uow.Products.GetAllAsync(
+				sortBy,
+				isDsc,
+				pageIndex,
+				length,
+				searchBy is null ? null : p => p.Name.ToLower().Contains(searchBy.ToLower()) || p.Description.ToLower().Contains(searchBy.ToLower()),
+				categoryId is null ? null : p => p.CategoryId == categoryId
+			);
+			return (products.Data.Select(_mapper.Map<ProductResponse>).ToList(), products.countBeforePagination);
+		}
+
 		public async Task CreateProduct(ProductViewModel productViewModel)
 		{
 			Product product = _mapper.Map<Product>(productViewModel);
-			string? ImageURL = _imageService.UploadImage(productViewModel.ImageFile); // ImageFile will not be null here because of the custom validation
+			string? ImageURL = _imageService.UploadFile(productViewModel.ImageFile); // ImageFile will not be null here because of the custom validation
 			if (ImageURL != null)
 				product.ImageURL = ImageURL;
 			await _uow.Products.CreateAsync(product);
@@ -60,8 +71,8 @@ namespace myshop.BLL.Services
 		{
 			if (productViewModel.ImageFile != null && productViewModel.ImageURL != null)
 			{
-				_imageService.DeleteImage(productViewModel.ImageURL);
-				string? newImageURL = _imageService.UploadImage(productViewModel.ImageFile);
+				_imageService.DeleteFile(productViewModel.ImageURL);
+				string? newImageURL = _imageService.UploadFile(productViewModel.ImageFile);
 				productViewModel.ImageURL = newImageURL;
 			}
 
@@ -76,7 +87,7 @@ namespace myshop.BLL.Services
 			if (productEntity is null)
 				return false;
 
-			_imageService.DeleteImage(productEntity.ImageURL);
+			_imageService.DeleteFile(productEntity.ImageURL);
 			_uow.Products.Delete(productEntity);
 			await _uow.SaveChangesAsync();
 			return true;

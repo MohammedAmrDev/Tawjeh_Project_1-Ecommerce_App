@@ -23,5 +23,26 @@ namespace myshop.DAL.Repositories
 
 			return await query.FirstOrDefaultAsync(p => p.Id == id);
 		}
+
+		public async Task<(List<Product>, int)> GetAllAsync(string? sortBy, bool isDesc, int pageIndex, int length, params Expression<Func<Product, bool>>?[] predicates)
+		{
+			var query = _context.Products.AsNoTracking().AsQueryable();
+
+			foreach (var predicate in predicates)
+				if (predicate is not null)
+					query = query.Where(predicate);
+			
+			if (sortBy is not null)
+			{
+				var sortDir = isDesc ? "desc" : "asc";
+				query = query.OrderBy($"{sortBy} {sortDir}");
+			}
+
+			var countBeforePagination = await query.CountAsync();
+
+			query =	query.Skip(pageIndex * length).Take(length);
+
+			return (await query.Include(p => p.Category).ToListAsync(), countBeforePagination);
+		}
 	}
 }

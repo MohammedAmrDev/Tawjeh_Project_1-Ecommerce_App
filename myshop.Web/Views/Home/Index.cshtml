@@ -1,8 +1,175 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using System.Text
+@using System.Web
+@model HomeViewModel
+
+@{
+	var allRoutes = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+	string? selectedCategoryId = Context.Request.Query["categoryId"];
+	bool isDesc = Convert.ToBoolean(Context.Request.Query["isDesc"]);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome TO VS</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@functions {
+	public string QueryStringUrlGenerator(string key, string? value)
+	{
+		var allRouteCopy = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+		StringBuilder queryString = new("?");
+		//allRouteCopy.Remove("searchBy");
+		allRouteCopy.Remove("pageIndex");
+
+		if (value is not null)
+		{
+			if (allRouteCopy.ContainsKey(key))
+				allRouteCopy[key] = value;
+			else
+				queryString.Append($"{key}={value}&");
+		}
+		else
+		{
+			allRouteCopy.Remove(key);
+		}
+
+		foreach (var kvp in allRouteCopy)
+		{
+			queryString.Append($"{kvp.Key}={kvp.Value}&");
+		}
+
+		return Context.Request.Path + queryString.ToString()[..^1];
+	}
+}
+
+<div class="categories-tags p-2 bg-light">
+	<div class="container d-flex justify-content-between">
+		<ul class="nav nav-pills" id="filter-tabs">
+			<li class="nav-item">
+				<a class="nav-link rounded-pill @(string.IsNullOrEmpty(selectedCategoryId) ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", null)">All</a>
+			</li>
+			@foreach (var category in Model.Categories)
+			{
+				<li class="nav-item">
+					<a class="nav-link rounded-pill @(selectedCategoryId == category.Id.ToString() ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", category.Id.ToString())">@category.Name</a>
+				</li>
+			}
+		</ul>
+		<div class="d-flex gap-2">
+			@if (!string.IsNullOrEmpty(Context.Request.Query["sortBy"].ToString()))
+			{
+				<a class="btn btn-secondary" href="@QueryStringUrlGenerator("isDesc", (!isDesc).ToString())">
+					@(isDesc ? "Asc" : "Desc")
+				</a>
+			}
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="@QueryStringUrlGenerator("sortBy", nameof(Product.Price))">Price</a>
+					<a class="dropdown-item" href="@QueryStringUrlGenerator("sortBy", nameof(Product.Name))">Name</a>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Number of products</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "5")">5</a>
+					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "10")">10</a>
+					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "15")">15</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+<div class="p-5 products-container">
+	<div class="container" style="display: flex;
+		flex-wrap: wrap;
+		gap: 24px;">
+		@foreach (var product in Model.Products)
+		{
+			<div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative" style="border-radius: 12px;overflow: hidden;flex: 1 1 250px;
+				max-width: 300px;">
+				<div class="overflow-hidden">
+					<img src='@product.ImageURL' class="w-100" alt="Product">
+				</div>
+				<div class="p-4">
+					<h5 class="fw-bold mb-3">@product.Name</h5>
+					<p class="text-muted mb-4">@product.Description</p>
+					<div class="d-flex justify-content-between align-items-center">
+						<span class="price">$@product.Price</span>
+						<button class="btn btn-custom text-white px-4 py-2 rounded-pill" onclick="addToCart(@product.Id, '@product.Name', @product.Price, '@Html.Raw(HttpUtility.JavaScriptStringEncode(product.ImageURL))')">Add to Cart</button>
+					</div>
+				</div>
+			</div>
+		}
+		<span class="msg">No Products To Show</span>
+	</div>
+</div>
+
+<div>
+	<div class="container d-flex justify-content-center">
+		<ul class="pagination">
+			@if (Model.CurretPageIndex > 0)
+			{
+				<li class="page-item">
+					<a class="page-link" href="@QueryStringUrlGenerator("pageIndex", (Model.CurretPageIndex - 1).ToString())">Previous</a>
+				</li>
+			}
+			else
+			{
+				<li class="page-item disabled">
+					<a class="page-link disabled" href="#">Previous</a>
+				</li>
+			}
+
+
+			@foreach (int? index in Model.PageIndexsList)
+			{
+				if (index is not null)
+				{
+					<li class="page-item @((index - 1) == Model.CurretPageIndex ? "active" : "")"><a class="page-link" href="@QueryStringUrlGenerator("pageIndex", (index - 1).ToString())">@index</a></li>
+				}
+				else
+				{
+					<li class="page-item disabled"><a class ="page-link">...</a></li>
+				}
+			}
+
+
+			@if (Model.CurretPageIndex < Model.PagesNumber - 1)
+			{
+				<li class="page-item">
+					<a class="page-link" href="@QueryStringUrlGenerator("pageIndex", (Model.CurretPageIndex + 1).ToString())">Next</a>
+				</li>
+			}
+			else
+			{
+				<li class="page-item disabled">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			}
+
+		</ul>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script>
+		function addToCart(productId, productName, price, imageUrl) {
+		  const product = {
+			 productId,
+			 productName,
+			 price,
+			  imageUrl
+		  };
+
+		  fetch('Cart/Add', {
+			  method: 'POST',
+			  headers: { 'content-type': 'application/json' },
+			  body: JSON.stringify(product)
+		  }).then(response => {
+			  if (!response.ok) console.error(response.status);
+			  return response.json();
+		  }).then(data => {
+			  document.getElementById('cartItemsNum').innerText = `${data.count}`;
+		  });
+		}
+	</script>
+}

@@ -9538,6 +9538,7 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Drawing.Common.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Memory.Data.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Reflection.MetadataLoadContext.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Runtime.Caching.dll
@@ -9732,4 +9733,3 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\obj\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\obj\Debug\net7.0\myshop.Web.pdb
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\obj\Debug\net7.0\myshop.Web.genruntimeconfig.cache
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\obj\Debug\net7.0\ref\myshop.Web.dll
-F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll

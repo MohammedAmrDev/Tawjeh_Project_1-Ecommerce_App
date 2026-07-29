@@ -43,7 +43,7 @@ namespace myshop.Web.Areas.Admin.Controllers
             {
                 draw = Request.Form["draw"][0],
 				recordsTotal,
-				recordsFiltered,
+				recordsFiltered = recordsTotal,
 				data,
             });
         }

@@ -37,7 +37,7 @@ namespace myshop.Web.Controllers
 				draw = Request.Form["draw"][0],
 				data,
 				recordsTotal,
-				recordsFiltered,
+				recordsFiltered = recordsTotal,
 			});
 		}
 

@@ -1,160 +1,156 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using myshop.Models.IdentityEntities
-@inject SignInManager<ApplicationUser> SignInManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - myshop.Web</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - ShopHub</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/myshop.Web.styles.css" asp-append-version="true" />
-    <style>
-        body {
-            background: linear-gradient(135deg,#eef2f7 0%,#d9e4f5 40%,#c3dafe 100%);
-            margin: 0;
-            animation: fadeIn .8s ease;
-        }
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/myshop.Web.styles.css" asp-append-version="true" />
+	<style>
+			body {
+				background: linear-gradient(135deg,#eef2f7 0%,#d9e4f5 40%,#c3dafe 100%);
+				margin: 0;
+				animation: fadeIn .8s ease;
+			}
 
-        @@keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
+			@@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
 
-            to {
-                opacity: 1;
-            }
-        }
+				to {
+					opacity: 1;
+				}
+			}
 
-        nav.navbar {
-            background: linear-gradient(90deg,#ffffff,#f8fbff) !important;
-            box-shadow: 0 6px 18px rgba(0,0,0,.08);
-            padding: 1rem 0;
-            animation: slideDown .8s ease;
-        }
+			.logo {
+				background: linear-gradient(135deg,#00c6ff,#0072ff);
+				color: white !important;
+				padding: .65rem 1.25rem;
+				margin-right: 20px;
+				border-radius: 14px;
+				text-decoration: none;
+				font-weight: 600;
+				transition: .3s;
+				box-shadow: 0 4px 12px rgba(0,0,0,.15);
+			}
 
-        @@keyframes slideDown {
-            from {
-                transform: translateY(-35px);
-                opacity: 0;
-            }
+			.categories-tags {
+				border-top: 1px solid #d3d3d3;
+				border-bottom: 1px solid #d3d3d3;
+			}
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+			.btn-custom {
+				background: linear-gradient(45deg, #6366f1, #8b5cf6);
+				border: none;
+				transition: all 0.3s ease;
+			}
 
-        .nav-link-box {
-            background: linear-gradient(135deg,#00c6ff,#0072ff);
-            color: white !important;
-            padding: .65rem 1.25rem;
-            margin-left: .75rem;
-            border-radius: 14px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: .3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,.15);
-        }
+			.btn-custom:hover {
+			   transform: translateY(-2px);
+			   box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+			}
 
-            .nav-link-box:hover {
-                transform: translateY(-3px);
-                background: linear-gradient(135deg,#005bea,#00c6fb);
-                box-shadow: 0 8px 18px rgba(0,0,0,.2);
-            }
+			footer {
+				background: linear-gradient(90deg,#111,#1b1b1b);
+				color: white;
+				padding: 1.2rem 0;
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
+			}
 
-        .home-box {
-            font-size: 1.05rem;
-            padding: .9rem 1.6rem;
-        }
+			footer a {
+			   color: white;
+			   text-decoration: none;
+			}
 
-        footer {
-            background: linear-gradient(90deg,#111,#1b1b1b);
-            color: white;
-            padding: 1.2rem 0;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
-        }
+			footer a:hover {
+			   text-decoration: underline;
+			}
 
-            footer a {
-                color: white;
-                text-decoration: none;
-            }
+			.div-info {
+				display: flex;
+				align-items: center;
+			}
 
-                footer a:hover {
-                    text-decoration: underline;
-                }
-    </style>
+			.cart-items-num:empty {
+				display: none;
+			}
+
+			.pagination li.active {
+				pointer-events: none;
+			}
+			.products-container span.msg {
+				color: #0000003b;
+				display: none;
+				margin: auto;
+				font-size: 4em;
+			}
+			.products-container:not(:has(.product-card)) span.msg {
+				display: block;
+			}
+			.products-container:not(:has(.product-card)) + div .container .pagination {
+				display: none;
+			}
+	</style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+	<header class="p-3 bg-light text-white">
+		<div class="container">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<a class="logo" asp-controller="Home" asp-action="Index">ShopHub</a>
+				@if (!Context.Request.Path.ToString().Contains("/Account/"))
+				{
+					<ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0 me-lg-auto">
+						<li><a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-secondary">Products</a></li>
+						<li>
+							<a asp-controller="Cart" asp-action="Index" class="nav-link px-2 text-secondary">
+								Cart
+								<span class="badge bg-primary cart-items-num" id="cartItemsNum">@ViewData["CartItemsNum"]</span>
+							</a>
+						</li>
+						<li>
+							<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="@Context.Request.QueryString" method="get">
+								<input type="search" name="searchBy" value="@Context.Request.Query["searchBy"].ToString()" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+								@foreach (var query in Context.Request.Query)
+								{
+									if (query.Key != "pageIndex" && query.Key != "searchBy")
+									{
+										<input type="hidden" name="@query.Key" value="@query.Value" />
+									}
+								}
+							</form>
+						</li>
+					</ul>
+				}
+				<div class="text-end d-flex gap-2" style="margin-left: auto;">
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
+		</div>
+	</header>
 
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light border-bottom">
-            <div class="container">
+	<main class="flex-grow-1">
+		@RenderBody()
+	</main>
 
-                <a class="navbar-brand nav-link-box home-box"
-                   asp-controller="Product"
-                   asp-action="Index">
-                    myshop.Web
-                </a>
+	<footer class="mt-auto">
+		<div class="container text-center">
+			&copy; @DateTime.Now.Year - myshop.Web
+		</div>
+	</footer>
 
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <ul class="navbar-nav ms-auto">
-
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-box"
-                                   asp-controller="Product"
-                                   asp-action="Index">
-                                    Products
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-box"
-                                   asp-controller="Category"
-                                   asp-action="Index">
-                                    Categories
-                                </a>
-                            </li>
-
-                        </ul>
-                    }
-                </div>
-
-                <partial name="_LoginPartial" />
-
-            </div>
-        </nav>
-    </header>
-
-    <main class="container flex-grow-1 py-4">
-        @RenderBody()
-    </main>
-
-    <footer class="mt-auto">
-        <div class="container text-center">
-            &copy; @DateTime.Now.Year - myshop.Web
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+	@await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>

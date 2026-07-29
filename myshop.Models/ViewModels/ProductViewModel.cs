@@ -22,7 +22,6 @@ namespace myshop.Models.ViewModels
 		[Range(1, 500)]
 		public decimal Price { get; set; }
 
-		[Required]
 		[AllowedExtensions]
 		[MaximumAllowedSize]
 		public IFormFile? ImageFile { get; set; }

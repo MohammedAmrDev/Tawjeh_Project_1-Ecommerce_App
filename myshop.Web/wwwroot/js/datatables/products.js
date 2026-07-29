@@ -29,6 +29,7 @@
       ],
       serverSide: true,
       lengthChange: false,
+      paging: true,
       pageLength: 5
    });
 });

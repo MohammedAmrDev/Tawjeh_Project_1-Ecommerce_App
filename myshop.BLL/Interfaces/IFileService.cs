@@ -4,7 +4,7 @@ namespace myshop.BLL.Interfaces
 {
 	public interface IFileService
 	{
-		string UploadImage(IFormFile file);
-		bool DeleteImage(string imageURL);
+		string UploadFile(IFormFile file);
+		bool DeleteFile(string imageURL);
 	}
 }

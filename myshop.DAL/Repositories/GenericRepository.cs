@@ -19,14 +19,14 @@ namespace myshop.DAL.Repositories
 		public async Task<int> GetCountAsync() =>
 			await _dbSet.CountAsync();
 
-		public async Task<List<T>> GetAllAsync()
-		{
-			return await _dbSet.ToListAsync();
-		}
+		public async Task<List<T>> GetAllAsync() =>
+			await _dbSet.AsNoTracking().ToListAsync();
+
+		
 
 		public async Task<List<T>> GetAllForDataTableAsync(Expression<Func<T, bool>>? filter, string? orderBy, string? orderDir, int start, int length, Expression<Func<T, object>>? include = null)
 		{
-			var query = _dbSet.AsQueryable();
+			var query = _dbSet.AsNoTracking().AsQueryable();
 
 			if (include is not null)
 				query = query.Include(include);
