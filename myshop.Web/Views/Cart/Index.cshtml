@@ -43,7 +43,7 @@
                     <h5 class="card-title mb-4">Order Summary</h5>
                     <div class="d-flex justify-content-between mb-3">
                         <span>Subtotal</span>
-                        <span>$0.00</span>
+                        <span id="total-cart-price">$@(Convert.ToDouble(ViewData["totalPrice"]).ToString("F2"))</span>
                     </div>
                     <div class="d-flex justify-content-between mb-3">
                         <span>Shipping</span>
@@ -56,7 +56,7 @@
                     <hr>
                     <div class="d-flex justify-content-between mb-4">
                         <strong>Total</strong>
-                        <strong>0.00</strong>
+                        <strong id="total-bill">$@(Convert.ToDouble(ViewData["totalPrice"]).ToString("F2"))</strong>
                     </div>
                     <button class="btn btn-primary w-100">Proceed to Checkout</button>
                 </div>
@@ -75,6 +75,7 @@
                return response.json();
             }).then(data => {
                event.target.previousElementSibling.value = data.quantity;
+               updateCartBill(data.totalPrice, 0, 0);
             });
          }
 
@@ -89,6 +90,7 @@
                   removeFromCart(event, id);
               } else {
                   event.target.nextElementSibling.value = data.quantity;
+                  updateCartBill(data.totalPrice, 0, 0);
               }
            });
         }
@@ -110,8 +112,10 @@
                      if (!response.ok) console.error(response.status);
                      return response.json();
                   }).then(data => {
-                     if (data.success)
+                     if (data.success) {
                         event.target.closest(".card").remove();
+                        updateCartBill(data.totalPrice, 0, 0);
+                     }
                   })
                }
             });
@@ -132,11 +136,18 @@
                         method: 'DELETE',
                      }).then(response => {
                         if (!response.ok) console.error(response.status);
+                        return response.json();
                      }).then(data => {
                            document.querySelectorAll("#cart-container .cart-item").forEach(el => el.remove());
+                           updateCartBill(data.totalPrice, 0, 0);
                      });
                   }
                });
+            }
+
+            function updateCartBill(cartPrice, shipping, taxes) {
+               document.getElementById("total-cart-price").textContent = "$" + cartPrice.toFixed(2);
+               document.getElementById("total-bill").textContent = "$" + ((cartPrice + shipping) * (1 - taxes)).toFixed(2);
             }
     </script>
 }

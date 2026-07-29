@@ -20,7 +20,7 @@ namespace myshop.Web.Controllers
 			_cartService = cartService;
         }
 
-        public async Task<IActionResult> Index(string? searchBy, int? categoryId, string? sortBy, bool isDesc, int pageIndex = 0, int length = 1)
+        public async Task<IActionResult> Index(string? searchBy, int? categoryId, string? sortBy, bool isDesc, int pageIndex = 0, int length = 5)
         {
             List<CategoryResponse> categories = await _categoriesService.GetCategoriesAsync();
             var (Data, countBeforePagination) = await _productsService.GetAllProducts(searchBy, categoryId, sortBy, isDesc, pageIndex, length);

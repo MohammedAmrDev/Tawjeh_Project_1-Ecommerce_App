@@ -77,6 +77,9 @@ namespace myshop.BLL.Services
 			_httpContextAccessor.HttpContext?.Session.SetString(_cartSessionName, JsonSerializer.Serialize(new List<CartItem>()));
 		}
 
+		public async Task<double> GetTotalPrice() =>
+			(await GetCart()).Sum(c => c.Price * c.Quantity);
+
 		#region Helper_Methods
 		private async Task<List<CartItem>> GetCartList()
 		{

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using myshop.BLL.Interfaces;
 using myshop.Models.Entities;
+using System.Diagnostics;
 
 namespace myshop.Web.Controllers
 {
@@ -17,6 +18,8 @@ namespace myshop.Web.Controllers
 
 		public async Task<IActionResult> Index()
 		{
+			double totalPrice = await _cartService.GetTotalPrice();
+			ViewData["totalPrice"] = totalPrice;
 			return View(await _cartService.GetCart());
 		}
 
@@ -24,35 +27,44 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> Add([FromBody] CartItem cartItem)
 		{
 			int count = await _cartService.AddItem(cartItem);
-			return Json(new { count });
+			double totalPrice = await _cartService.GetTotalPrice();
+			return Json(new { count, totalPrice });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> IncreaseQuantity(int id)
 		{
 			int quantity = await _cartService.IncreaseQuantity(id);
-			return Json(new { quantity });
+			double totalPrice = await _cartService.GetTotalPrice();
+
+			return Json(new { quantity, totalPrice });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> DecreaseQuantity(int id)
 		{
 			int quantity = await _cartService.DecreaseQuantity(id);
-			return Json(new { quantity });
+			double totalPrice = await _cartService.GetTotalPrice();
+
+			return Json(new { quantity, totalPrice });
 		}
 
 		[HttpDelete]
 		public async Task<IActionResult> Delete(int id)
 		{
 			bool isDelete = await _cartService.RemoveItem(id);
-			return Json(new { success = isDelete });
+			double totalPrice = await _cartService.GetTotalPrice();
+
+			return Json(new { success = isDelete, totalPrice });
 		}
 
 		[HttpDelete]
-		public IActionResult Clear()
+		public async Task<IActionResult> Clear()
 		{
 			_cartService.ClearCart();
-			return Json(new {});
+			double totalPrice = await _cartService.GetTotalPrice();
+
+			return Json(new { totalPrice });
 		}
 	}
 }
