@@ -2,14 +2,15 @@
 
 namespace myshop.Models.Entities
 {
-    public class Category
+    public class Category : IGenericEntity, ISoftDeletableEntity
     {
-        public int Id { get; set; }
+		public int Id { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
+		public DateTimeOffset UpdatedAt { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+		public bool IsDeleted { get; set; }
 
+		public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedTime { get; set; } = DateTime.Now;
     }
 }

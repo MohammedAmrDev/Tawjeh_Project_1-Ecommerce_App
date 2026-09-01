@@ -1,0 +1,175 @@
+@model ProductResponse
+@{
+	ViewData["Title"] = Model.Name;
+	var product = Model;
+
+	dynamic? myReview = ViewBag.CurrentUserReview;
+}
+
+@functions {
+	string Stars(double rating)
+	{
+		var full = (int)Math.Round(rating, MidpointRounding.AwayFromZero);
+		full = Math.Clamp(full, 0, 5);
+		return new string('★', full) + new string('☆', 5 - full);
+	}
+}
+
+<div class="container py-5">
+
+	<!-- Breadcrumb -->
+	<nav class="small text-muted mb-4">
+		<a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none">Home</a>
+		<span class="mx-1">/</span>
+		<a asp-controller="Home" asp-action="Index" asp-route-categoryId="@product.CategoryId" class="text-muted text-decoration-none">@product.CategoryName</a>
+		<span class="mx-1">/</span>
+		<span class="text-dark">@product.Name</span>
+	</nav>
+
+	<!-- Product overview -->
+	<div class="row mb-2">
+		<div class="col-lg-6 mb-4">
+			<div class="rounded-xl border shadow-sm overflow-hidden position-relative">
+				<img src="/@product.ImageURL" alt="@product.Name" class="w-100" style="height: 440px; object-fit: cover;" />
+				@if (product.IsDeleted)
+				{
+					<span class="badge badge-danger position-absolute rounded-pill" style="top: 1rem; left: 1rem;">Unavailable</span>
+				}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<span class="badge badge-secondary rounded-pill mb-3">@product.CategoryName</span>
+			<h2 class="mb-2">@product.Name</h2>
+
+			<div class="d-flex align-items-center gap-2 mb-3">
+				<span id="avgStars" class="text-warning fs-5">@Stars(ViewBag.AverageRating)</span>
+				<span id="avgText" class="text-muted small">
+					@ViewBag.AverageRating.ToString("0.0") &middot; @ViewBag.ReviewCount review@(ViewBag.ReviewCount == 1 ? "" : "s")
+				</span>
+			</div>
+
+			<p class="fs-2 fw-bold text-primary mb-4">@product.Price.ToString("C")</p>
+
+			<p class="text-muted mb-4">@product.Description</p>
+		</div>
+	</div>
+
+	<!-- Current user's review -->
+	<div id="reviewSection">
+
+		<div id="reviewView" class="card mb-4"
+			 data-id="@(myReview?.Id)"
+			 data-rating="@(myReview?.Rate)"
+			 style="border-color: var(--color-primary); background-color: rgba(108, 92, 231, 0.04); @(myReview == null ? "display:none;" : "")">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+					<div>
+						<span class="badge badge-primary rounded-pill mb-2">Your Review</span>
+						<div class="text-warning fs-5">@(myReview != null ? Stars(myReview.Rate) : "")</div>
+					</div>
+					<div class="d-flex gap-2">
+						<button type="button" class="btn btn-outline-primary btn-sm" onclick="editReview()">Edit</button>
+						<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteReview()">Remove</button>
+					</div>
+				</div>
+				<p id="reviewComment" class="mb-1">@(myReview != null ? myReview.Comment : "")</p>
+				<p class="text-muted small mb-0">@(myReview != null ? myReview.CreatedAt.ToString("MMM dd, yyyy") : "")</p>
+			</div>
+		</div>
+
+		<div id="reviewEmpty" class="card mb-4" style="@(myReview != null ? "display:none;" : "")">
+			<div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+				<p class="text-muted mb-0">You haven't reviewed this product yet.</p>
+				<button type="button" class="btn btn-primary btn-sm" onclick="openForm()">Write a Review</button>
+			</div>
+		</div>
+
+		 <form id="reviewForm" class="card mb-4" style="display:none;">
+		 	<div class="card-body">
+				  <div class="mb-3">
+					 <label class="form-label">Rating</label>
+					 <select id="ratingInput" class="form-control" required>
+						   <option value="5">★★★★★ (5)</option>
+						   <option value="4">★★★★☆ (4)</option>
+						   <option value="3">★★★☆☆ (3)</option>
+						   <option value="2">★★☆☆☆ (2)</option>
+						   <option value="1">★☆☆☆☆ (1)</option>
+					 </select>
+				  </div>
+				  <div class="mb-3">
+					 <label class="form-label">Comment</label>
+					 <textarea id="commentInput" class="form-control" rows="3" placeholder="Share your thoughts..." required></textarea>
+				  </div>
+				  <div class="d-flex gap-2">
+					 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+					 <button type="button" class="btn btn-outline-secondary btn-sm" onclick="closeForm()">Cancel</button>
+				  </div>
+			</div>
+		 </form>
+
+	</div>
+</div>
+
+<script>
+	const productId = @product.Id;
+
+	function openForm() {
+		document.getElementById('reviewView').style.display = 'none';
+		document.getElementById('reviewEmpty').style.display = 'none';
+		document.getElementById('reviewForm').style.display = 'block';
+	}
+
+	function closeForm() {
+		document.getElementById('reviewForm').style.display = 'none';
+		const hasReview = document.getElementById('reviewView').dataset.id;
+		document.getElementById(hasReview ? 'reviewView' : 'reviewEmpty').style.display = 'block';
+	}
+
+	function editReview() {
+		const view = document.getElementById('reviewView');
+		document.getElementById('ratingInput').value = view.dataset.rating;
+		document.getElementById('commentInput').value = document.getElementById('reviewComment').textContent;
+		openForm();
+	}
+
+	document.getElementById('reviewForm').addEventListener('submit', e => {
+		e.preventDefault();
+		const id = document.getElementById('reviewView').dataset.id;
+		const rate = document.getElementById('ratingInput').value;
+		const comment = document.getElementById('commentInput').value;
+
+		fetch(id ? `/api/reviews/${id}` : '/api/reviews/', {
+			method: id ? 'PUT' : 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ productId: productId, rate: +rate, comment: comment })
+		}).then(response => {
+			if (response.redirected) {
+				window.location.href = response.url;
+			} else {
+				location.reload();
+			}
+		});
+	});
+
+	function deleteReview() {
+		 Swal.fire({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+	   }).then(async (result) => {
+		   if (result.value) {
+			  const id = document.getElementById('reviewView').dataset.id;
+			  fetch(`/api/reviews/${id}`, { method: 'DELETE' })
+			  .then(() => {
+				  document.getElementById('reviewView').style.display = 'none';
+				  document.getElementById('reviewEmpty').style.display = 'block';
+			  });
+		   }
+	   })
+	}
+</script>

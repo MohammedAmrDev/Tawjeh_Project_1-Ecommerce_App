@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using myshop.BLL.Interfaces;
 using myshop.Models.DTOs;
-using myshop.Models.Entities;
 using System.Text.Json;
 
 namespace myshop.BLL.Services
@@ -77,7 +76,7 @@ namespace myshop.BLL.Services
 			_httpContextAccessor.HttpContext?.Session.SetString(_cartSessionName, JsonSerializer.Serialize(new List<CartItem>()));
 		}
 
-		public async Task<double> GetTotalPrice() =>
+		public async Task<double> GetTotalPriceAsync() =>
 			(await GetCart()).Sum(c => c.Price * c.Quantity);
 
 		#region Helper_Methods

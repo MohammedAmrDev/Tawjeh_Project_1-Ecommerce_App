@@ -1,1 +1,55 @@
-[]
+[
+  {
+    "ContainingType": "myshop.Web.Controllers.ReviewController",
+    "Method": "AddReview",
+    "RelativePath": "api/reviews",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reviewRequest",
+        "Type": "myshop.Models.DTOs.ReviewRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "myshop.Web.Controllers.ReviewController",
+    "Method": "UpdateReview",
+    "RelativePath": "api/reviews/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "reviewRequest",
+        "Type": "myshop.Models.DTOs.ReviewRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "myshop.Web.Controllers.ReviewController",
+    "Method": "DeleteReview",
+    "RelativePath": "api/reviews/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -1,26 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace myshop.Models.Entities
 {
-	public class Product
+	public class Product : IGenericEntity, ISoftDeletableEntity
     {
-        public int Id { get; set; }
+		public int Id { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
+		public DateTimeOffset UpdatedAt { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public string Name { get; set; }
         public string Description { get; set; }
-
-        [DisplayName("Image")]
-        [ValidateNever]
-        public string ImageURL { get; set; }
-
-        [Required]
+		[ValidateNever]
+		public string ImageURL { get; set; }
         public decimal Price { get; set; }
-
-        [Required]
-        [DisplayName("Category")]
         public int CategoryId { get; set; }
         [ValidateNever]
         public Category Category { get; set; }

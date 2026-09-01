@@ -1,0 +1,111 @@
+﻿@using myshop.Models.ViewModels
+@model CheckoutViewModel
+
+<div class="container py-5">
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="row">
+        <!-- Delivery Information -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Delivery Information</h5>
+
+                    <!-- Standard MVC Form -->
+                    <form asp-action="ConfrimOrder" method="post" id="checkout-form">
+
+                        <!-- Shows summary of all errors at the top (optional) -->
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DeliveryInfo.CustomerName" class="form-label"></label>
+                                <input asp-for="DeliveryInfo.CustomerName" class="form-control" />
+                                <span asp-validation-for="DeliveryInfo.CustomerName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DeliveryInfo.Phone" class="form-label"></label>
+                                <input asp-for="DeliveryInfo.Phone" class="form-control" />
+                                <span asp-validation-for="DeliveryInfo.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DeliveryInfo.Email" class="form-label"></label>
+                            <input asp-for="DeliveryInfo.Email" class="form-control" />
+                            <span asp-validation-for="DeliveryInfo.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DeliveryInfo.Address" class="form-label"></label>
+                            <input asp-for="DeliveryInfo.Address" class="form-control" />
+                            <span asp-validation-for="DeliveryInfo.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DeliveryInfo.City" class="form-label"></label>
+                            <input asp-for="DeliveryInfo.City" class="form-control" />
+                            <span asp-validation-for="DeliveryInfo.City" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="DeliveryInfo.OrderNotes" class="form-label"></label>
+                            <textarea asp-for="DeliveryInfo.OrderNotes" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="DeliveryInfo.OrderNotes" class="text-danger"></span>
+                        </div>
+                        
+                        <!-- Payment Method Selection -->
+                        <h5 class="card-title mb-3">Payment Method</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="1" checked id="payCOD">
+                            <label class="form-check-label" for="payCOD">
+                                <i class="fa fa-money me-2"></i> Cash on Delivery
+                            </label>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="2" id="payStripe">
+                            <label class="form-check-label" for="payStripe">
+                                <i class="fa fa-credit-card me-2"></i> Pay with Card (Stripe Sandbox)
+                            </label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-primary">Back to Cart</a>
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="order-summary">
+                <h5 class="mb-4">Order Summary</h5>
+
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="@item.ImageURL" class="rounded me-2" style="max-width: 50px; height: auto;">
+                        <div class="flex-grow-1">
+                            <p class="mb-0 fw-bold" style="font-size: 0.9rem;">@item.ProductName</p>
+                            <small class="text-muted">@item.Quantity x $@item.Price</small>
+                        </div>
+                        <span class="fw-bold">$@((item.Price * item.Quantity).ToString("F2"))</span>
+                    </div>
+                }
+
+                <div class="summary-total">
+                    <strong>Total</strong>
+                    <strong>$@Model.TotalPrice.ToString("F2")</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

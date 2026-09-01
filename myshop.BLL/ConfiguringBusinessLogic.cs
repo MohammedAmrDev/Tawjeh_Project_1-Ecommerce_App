@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using myshop.BLL.Interfaces;
 using myshop.BLL.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace myshop.BLL
 {
@@ -18,7 +13,9 @@ namespace myshop.BLL
 			services.AddScoped<IFileService, LocalFileService>();
 			services.AddScoped<IUserManagementService, UserManagementService>();
 			services.AddScoped<ICartService, CartService>();
-			services.AddTransient<IMailService, MailService>();
+			services.AddScoped<IOrderService, OrderService>();
+			services.AddTransient<IMailService, MailKitService>();
+			services.AddTransient<IReviewService, ReviewService>();
 			return services;
 		}
 	}

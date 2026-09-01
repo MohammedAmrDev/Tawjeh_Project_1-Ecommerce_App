@@ -1,4 +1,6 @@
-﻿namespace myshop.Models.DTOs
+﻿using myshop.Models.Entities;
+
+namespace myshop.Models.DTOs
 {
 	public class ProductResponse
 	{
@@ -9,5 +11,6 @@
 		public string ImageURL { get; set; }
 		public int CategoryId { get; set; }
 		public string CategoryName { get; set; }
+		public bool IsDeleted { get; set; }
 	}
 }

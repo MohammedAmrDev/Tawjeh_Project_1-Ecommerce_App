@@ -9334,7 +9334,6 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Drawing.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Drawing.Primitives.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Dynamic.Runtime.dll
-F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Formats.Asn1.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Formats.Tar.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Globalization.Calendars.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Globalization.dll
@@ -9427,7 +9426,6 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Security.SecureString.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.ServiceModel.Web.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.ServiceProcess.dll
-F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Text.Encoding.CodePages.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Text.Encoding.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Text.Encoding.Extensions.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\refs\System.Text.Encodings.Web.dll
@@ -9464,8 +9462,10 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Azure.Core.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Azure.Identity.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Humanizer.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\JetBrains.Annotations.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\MailKit.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -9517,6 +9517,7 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\MimeKit.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Mono.TextTemplating.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\Newtonsoft.Json.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\NuGet.Common.dll
@@ -9537,13 +9538,16 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Composition.TypedParts.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Drawing.Common.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Formats.Asn1.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Memory.Data.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Reflection.MetadataLoadContext.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Runtime.Caching.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Security.Permissions.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Text.Encoding.CodePages.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\System.Windows.Extensions.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\X.PagedList.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\X.PagedList.Mvc.Core.dll
@@ -9696,7 +9700,9 @@ F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\ne
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Text.Encoding.CodePages.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\myshop.BLL.dll
 F:\Desktop\M0h@mm3d\C# Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net7.0\myshop.DAL.dll

@@ -7,25 +7,36 @@
          dataSrc: "data",
       },
       columns: [
+         { data: "isDeleted", name: "Name", autowidth: true },
          { data: "name", name: "Name", autowidth: true },
          { data: "description", name: "Description", autowidth: true },
          { data: "price", name: "Price", autowidth: true },
          { data: "categoryName", name: "CategoryName", autowidth: true },
          {
             data: "id",
-            render: function (data) {
-               return `
-                        <a href="/Product/Edit/${data}" class="btn btn-success btn-sm">
-                              <i class="fa-solid fa-pen"></i>
-                        </a>
+            render: function (data, type, row) {
+               let softDeleteHtml = "";
 
-                        <button onclick="deleteProduct(${data})" class="btn btn-danger btn-sm">
-                              <i class="fa-solid fa-trash"></i>
-                        </button>
-                     `;
+               if (row.isDeleted === true) {
+                  softDeleteHtml = `<button onclick="restoreProduct(${data})" class="btn btn-success btn-sm">
+                                          <i class="fa-solid fa-trash-arrow-up"></i>
+                                    </button>`;
+               } else {
+                  softDeleteHtml = `<button onclick="deleteProduct(${data})" class="btn btn-danger btn-sm">
+                                          <i class="fa-solid fa-trash"></i>
+                                    </button>`;
+               }
+
+               return `<a href="/Product/Edit/${data}" class="btn btn-success btn-sm">
+                             <i class="fa-solid fa-pen"></i>
+                       </a>
+                       ${softDeleteHtml}`;
             },
             orderable: false
          }
+      ],
+      columnDefs: [
+         { targets: 0, visible: false } // Hides the third column (secretInfo)
       ],
       serverSide: true,
       lengthChange: false,
@@ -62,5 +73,20 @@ function deleteProduct(id) {
             }
          })
       }
+   });
+}
+
+function restoreProduct(id) {
+   $.ajax({
+      type: "PUT",
+      url: `/Product/Restore/${id}`,
+      success: function (data) {
+         toastr.success(data.message);
+      },
+      error: function () { // Fires if status_codes are errors (e.g. 400, 401,.. )
+         console.error('faild');
+      }
+   }).then(() => {
+      $('#mytable').DataTable().ajax.reload();
    });
 }

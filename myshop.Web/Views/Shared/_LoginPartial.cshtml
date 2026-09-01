@@ -1,19 +1,18 @@
-﻿@using myshop.Models.Enums
-@if (User.Identity is not null && User.Identity.IsAuthenticated)
+﻿@if (User.Identity is not null && User.Identity.IsAuthenticated)
 {
 	@if(User.IsInRole(nameof(UserTypeEnum.Customer)))
 	{
-		<span class="text-secondary" style="margin: 10px; line-height: 12px;">Hello @User.Identity.Name</span>
+		<span class="text-muted" style="margin-right: 0.5rem;">Hello @User.Identity.Name</span>
 
 	}
 	else if (User.IsInRole(nameof(UserTypeEnum.Admin)))
 	{
 		<div class="dropdown">
-			<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button class="btn btn-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fa-solid fa-user" style="margin-right:5px"></i>
 				@User.Identity.Name
 			</button>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<div class="dropdown-menu" aria-labelledby="userDropdown">
 				<a class="dropdown-item" asp-controller="Product" asp-action="Index">Product Management</a>
 				<a class="dropdown-item" asp-controller="Category" asp-action="Index">Category Management</a>
 			</div>

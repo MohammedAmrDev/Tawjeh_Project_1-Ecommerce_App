@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myshop.BLL.Interfaces;
-using myshop.Models.Entities;
-using System.Diagnostics;
+using myshop.Models.DTOs;
 
 namespace myshop.Web.Controllers
 {
@@ -18,7 +17,7 @@ namespace myshop.Web.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 			ViewData["totalPrice"] = totalPrice;
 			return View(await _cartService.GetCart());
 		}
@@ -27,7 +26,7 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> Add([FromBody] CartItem cartItem)
 		{
 			int count = await _cartService.AddItem(cartItem);
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 			return Json(new { count, totalPrice });
 		}
 
@@ -35,7 +34,7 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> IncreaseQuantity(int id)
 		{
 			int quantity = await _cartService.IncreaseQuantity(id);
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 
 			return Json(new { quantity, totalPrice });
 		}
@@ -44,7 +43,7 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> DecreaseQuantity(int id)
 		{
 			int quantity = await _cartService.DecreaseQuantity(id);
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 
 			return Json(new { quantity, totalPrice });
 		}
@@ -53,7 +52,7 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> Delete(int id)
 		{
 			bool isDelete = await _cartService.RemoveItem(id);
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 
 			return Json(new { success = isDelete, totalPrice });
 		}
@@ -62,7 +61,7 @@ namespace myshop.Web.Controllers
 		public async Task<IActionResult> Clear()
 		{
 			_cartService.ClearCart();
-			double totalPrice = await _cartService.GetTotalPrice();
+			double totalPrice = await _cartService.GetTotalPriceAsync();
 
 			return Json(new { totalPrice });
 		}

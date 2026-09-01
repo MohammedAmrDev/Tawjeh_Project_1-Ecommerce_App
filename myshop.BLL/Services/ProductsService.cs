@@ -59,7 +59,7 @@ namespace myshop.BLL.Services
 			await _uow.SaveChangesAsync();
 		}
 
-		public async Task<ProductResponse?> GetProductById(int id)
+		public async Task<ProductResponse?> GetProductByIdAsync(int id)
 		{
 			Product? product = await _uow.Products.GetByIdAsync(id, x => x.Category);
 			if (product == null)
@@ -87,10 +87,20 @@ namespace myshop.BLL.Services
 			if (productEntity is null)
 				return false;
 
-			_imageService.DeleteFile(productEntity.ImageURL);
+			//_imageService.DeleteFile(productEntity.ImageURL); // Don't remove the uploaded images because of soft delete update
 			_uow.Products.Delete(productEntity);
 			await _uow.SaveChangesAsync();
 			return true;
+		}
+
+		public async Task RestoreProductAsync(int id)
+		{
+			Product? productEntity = await _uow.Products.GetByIdAsync(id, x => x.Category);
+			if (productEntity is not null)
+			{
+				_uow.Products.Restore(productEntity);
+				await _uow.SaveChangesAsync();
+			}
 		}
 	}
 }

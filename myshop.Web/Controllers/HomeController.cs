@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using myshop.BLL.Interfaces;
 using myshop.Models.DTOs;
 using myshop.Models.ViewModels;
+using System.Security.Claims;
 
 namespace myshop.Web.Controllers
 {
@@ -12,15 +13,18 @@ namespace myshop.Web.Controllers
         private readonly ICategoriesService _categoriesService;
         private readonly IProductsService _productsService;
         private readonly ICartService _cartService;
+        private readonly IReviewService _reviewService;
 
-		public HomeController(ICategoriesService categoriesService, IProductsService productsService, ICartService cartService)
+
+		public HomeController(ICategoriesService categoriesService, IProductsService productsService, ICartService cartService, IReviewService reviewService)
         {
 			_categoriesService = categoriesService;
 			_productsService = productsService;
 			_cartService = cartService;
-        }
+            _reviewService = reviewService;
+		}
 
-        public async Task<IActionResult> Index(string? searchBy, int? categoryId, string? sortBy, bool isDesc, int pageIndex = 0, int length = 5)
+		public async Task<IActionResult> Index(string? searchBy, int? categoryId, string? sortBy, bool isDesc, int pageIndex = 0, int length = 5)
         {
             List<CategoryResponse> categories = await _categoriesService.GetCategoriesAsync();
             var (Data, countBeforePagination) = await _productsService.GetAllProducts(searchBy, categoryId, sortBy, isDesc, pageIndex, length);
@@ -41,6 +45,21 @@ namespace myshop.Web.Controllers
 
 
 			return View(homeViewModel);
+        }
+
+		public async Task<IActionResult> ProductDetails(int id)
+        {
+            var productResponse = await _productsService.GetProductByIdAsync(id);
+            var productReviewDetails = await _reviewService.GetProductReviewDetails(id);
+
+			ViewBag.AverageRating = productReviewDetails.AverageRating;
+            ViewBag.ReviewCount = productReviewDetails.ReviewCount;
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reviewResponse = await _reviewService.GetCurrentUserReview(userId, id);
+			ViewBag.CurrentUserReview = reviewResponse;
+
+			return View(productResponse);
         }
 
         private List<int?> GetPageIndexsList(int totalPages, int current)

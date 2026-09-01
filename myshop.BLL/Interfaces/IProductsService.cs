@@ -8,8 +8,9 @@ namespace myshop.BLL.Interfaces
 		Task<(List<ProductResponse> data, int recordsTotal, int recordsFiltered)> GetAllProducts(string? search, string? orderBy, string? orderDir, int? start, int? length);
 		Task<(List<ProductResponse> Data, int countBeforePagination)> GetAllProducts(string? searchBy, int? categoryId, string? sortBy, bool isDsc, int pageIndex, int length);
 		Task CreateProduct(ProductViewModel productViewModel);
-		Task<ProductResponse?> GetProductById(int id);
+		Task<ProductResponse?> GetProductByIdAsync(int id);
 		Task UpdateProduct(ProductViewModel productViewModel);
 		Task<bool> DeleteProductAsync(int id);
+		Task RestoreProductAsync(int id);
 	}
 }

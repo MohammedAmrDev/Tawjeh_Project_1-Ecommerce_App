@@ -2,7 +2,8 @@
 
 namespace myshop.DAL.Interfaces
 {
-	public interface ICategoriesRepository : IGenericRepository<Category>
+	public interface ICategoriesRepository : ISoftDeleteRepository<Category>
 	{
+		Task<List<Category>> GetAllAsync();
 	}
 }

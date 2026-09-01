@@ -7,22 +7,11 @@ using System.Linq.Expressions;
 
 namespace myshop.DAL.Repositories
 {
-	internal class ProductsRepository : GenericRepository<Product>, IProductsRepository
+	internal class ProductsRepository : SoftDeleteRepository<Product>, IProductsRepository
 	{
 		private readonly ApplicationDbContext _context;
 		public ProductsRepository(ApplicationDbContext context) : base(context) => _context = context;
 
-		public async Task<Product?> GetByIdAsync(int id, params Expression<Func<Product, object>>[] includes)
-		{
-			IQueryable<Product> query = _context.Products;
-
-			foreach (var include in includes)
-			{
-				query = query.Include(include);
-			}
-
-			return await query.FirstOrDefaultAsync(p => p.Id == id);
-		}
 
 		public async Task<(List<Product>, int)> GetAllAsync(string? sortBy, bool isDesc, int pageIndex, int length, params Expression<Func<Product, bool>>?[] predicates)
 		{

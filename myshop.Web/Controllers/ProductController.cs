@@ -83,7 +83,7 @@ namespace myshop.Web.Areas.Admin.Controllers
 			if (id is null)
 				return BadRequest("Invalid Category Id");
 
-			ProductResponse? productResponse = await _productsService.GetProductById(id.Value);
+			ProductResponse? productResponse = await _productsService.GetProductByIdAsync(id.Value);
 
 			if (productResponse is null)
 				return NotFound();
@@ -124,5 +124,14 @@ namespace myshop.Web.Areas.Admin.Controllers
 
             return Json(new { success = false, message = "Error while Deleting" });
         }
-    }
+
+		[HttpPut]
+		public async Task<IActionResult> Restore(int? id)
+		{
+			if (id is null)
+				return BadRequest("Invalid Category Id");
+			await _productsService.RestoreProductAsync(id.Value);
+            return Json(new { message = "Restore completed" });
+		}
+	}
 }

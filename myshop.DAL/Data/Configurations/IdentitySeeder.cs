@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using myshop.Models.Enums;
 
-namespace myshop.DAL.Data
+namespace myshop.DAL.Data.Configurations
 {
 	public static class IdentitySeeder
 	{

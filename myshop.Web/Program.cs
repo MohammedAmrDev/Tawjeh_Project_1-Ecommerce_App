@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using myshop.BLL;
 using myshop.DAL.Data;
+using myshop.DAL.Data.Configurations;
 using myshop.DAL.Interfaces;
 using myshop.DAL.Repositories;
 using myshop.Models.IdentityEntities;
@@ -60,9 +61,6 @@ using (var scope = app.Services.CreateScope())
     await IdentitySeeder.SeedRolesAsync(scope.ServiceProvider);
 }
 
-
-
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -87,4 +85,3 @@ app.MapControllerRoute(
 );
 
 app.Run();
-

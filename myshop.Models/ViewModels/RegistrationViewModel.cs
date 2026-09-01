@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using myshop.Models.Enums;
-using System;
-using System.Collections.Generic;
+﻿using myshop.Models.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace myshop.Models.ViewModels
 {
@@ -32,6 +26,7 @@ namespace myshop.Models.ViewModels
 		[DataType(DataType.Password)]
 		public string? PasswordConfirm { get; set; }
 
-		public UserTypeEnum Role { get; set; } = UserTypeEnum.Customer;
+		[Required(ErrorMessage = "Error occured when defining the user role")]
+		public UserTypeEnum? Role { get; set; }
 	}
 }

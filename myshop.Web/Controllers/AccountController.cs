@@ -39,7 +39,7 @@ namespace myshop.Web.Controllers
 			IdentityResult result = await _userManager.CreateAsync(mappedUser, registrationViewModel.Password);
 			if (result.Succeeded)
 			{
-				await _userManager.AddToRoleAsync(mappedUser, registrationViewModel.Role.ToString());
+				await _userManager.AddToRoleAsync(mappedUser, registrationViewModel.Role.Value.ToString());
 
 				var user = await _userManager.FindByEmailAsync(mappedUser.Email);
 				var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -118,8 +118,10 @@ namespace myshop.Web.Controllers
 
 			var result = await _userManager.ConfirmEmailAsync(user, token);
 
+
 			if (result.Succeeded)
 			{
+				await _mailService.SendWelcomeEmailAsync(user.UserName, user.Email);
 				return RedirectToAction("Login");
 			}
 

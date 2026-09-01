@@ -13,7 +13,6 @@
 	{
 		var allRouteCopy = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
 		StringBuilder queryString = new("?");
-		//allRouteCopy.Remove("searchBy");
 		allRouteCopy.Remove("pageIndex");
 
 		if (value is not null)
@@ -37,36 +36,32 @@
 	}
 }
 
-<div class="categories-tags p-2 bg-light">
-	<div class="container d-flex justify-content-between">
-		<ul class="nav nav-pills" id="filter-tabs">
-			<li class="nav-item">
-				<a class="nav-link rounded-pill @(string.IsNullOrEmpty(selectedCategoryId) ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", null)">All</a>
-			</li>
+<div class="categories-filter">
+	<div class="container d-flex justify-content-between align-items-center">
+		<div class="filter-tabs">
+			<a class="nav-link @(string.IsNullOrEmpty(selectedCategoryId) ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", null)">All</a>
 			@foreach (var category in Model.Categories)
 			{
-				<li class="nav-item">
-					<a class="nav-link rounded-pill @(selectedCategoryId == category.Id.ToString() ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", category.Id.ToString())">@category.Name</a>
-				</li>
+				<a class="nav-link @(selectedCategoryId == category.Id.ToString() ? "active" : "")" href="@QueryStringUrlGenerator("categoryId", category.Id.ToString())">@category.Name</a>
 			}
-		</ul>
-		<div class="d-flex gap-2">
+		</div>
+		<div class="filter-actions">
 			@if (!string.IsNullOrEmpty(Context.Request.Query["sortBy"].ToString()))
 			{
-				<a class="btn btn-secondary" href="@QueryStringUrlGenerator("isDesc", (!isDesc).ToString())">
+				<a class="btn btn-outline-secondary btn-sm" href="@QueryStringUrlGenerator("isDesc", (!isDesc).ToString())">
 					@(isDesc ? "Asc" : "Desc")
 				</a>
 			}
 			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
+				<div class="dropdown-menu" aria-labelledby="sortDropdown">
 					<a class="dropdown-item" href="@QueryStringUrlGenerator("sortBy", nameof(Product.Price))">Price</a>
 					<a class="dropdown-item" href="@QueryStringUrlGenerator("sortBy", nameof(Product.Name))">Name</a>
 				</div>
 			</div>
 			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Number of products</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="countDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Number of products</button>
+				<div class="dropdown-menu" aria-labelledby="countDropdown">
 					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "5")">5</a>
 					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "10")">10</a>
 					<a class="dropdown-item" href="@QueryStringUrlGenerator("length", "15")">15</a>
@@ -78,23 +73,21 @@
 
 
 <div class="p-5 products-container">
-	<div class="container" style="display: flex;
-		flex-wrap: wrap;
-		gap: 24px;">
+	<div class="container d-flex flex-wrap gap-4">
 		@foreach (var product in Model.Products)
 		{
-			<div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative" style="border-radius: 12px;overflow: hidden;flex: 1 1 250px;
-				max-width: 300px;">
-				<div class="overflow-hidden">
-					<img src='@product.ImageURL' class="w-100" alt="Product">
+			<div class="product-card">
+				<div class="product-image">
+					<img src='@product.ImageURL' alt="@product.Name">
 				</div>
-				<div class="p-4">
-					<h5 class="fw-bold mb-3">@product.Name</h5>
-					<p class="text-muted mb-4">@product.Description</p>
-					<div class="d-flex justify-content-between align-items-center">
+				<div class="product-info">
+					<h5>@product.Name</h5>
+					<p>@product.Description</p>
+					<div class="product-footer">
 						<span class="price">$@product.Price</span>
-						<button class="btn btn-custom text-white px-4 py-2 rounded-pill" onclick="addToCart(@product.Id, '@product.Name', @product.Price, '@Html.Raw(HttpUtility.JavaScriptStringEncode(product.ImageURL))')">Add to Cart</button>
+						<button class="btn btn-primary btn-sm" onclick="addToCart(@product.Id, '@product.Name', @product.Price, '@Html.Raw(HttpUtility.JavaScriptStringEncode(product.ImageURL))')">Add to Cart</button>
 					</div>
+					<a class="btn-link small mt-3 d-inline-block" asp-controller="Home" asp-action="ProductDetails" asp-route-id="@product.Id">View Details</a>
 				</div>
 			</div>
 		}
@@ -114,7 +107,7 @@
 			else
 			{
 				<li class="page-item disabled">
-					<a class="page-link disabled" href="#">Previous</a>
+					<a class="page-link" href="#">Previous</a>
 				</li>
 			}
 
@@ -127,7 +120,7 @@
 				}
 				else
 				{
-					<li class="page-item disabled"><a class ="page-link">...</a></li>
+					<li class="page-item disabled"><a class="page-link">...</a></li>
 				}
 			}
 

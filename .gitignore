@@ -1,4 +1,13 @@
+# Build folders
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio user files
+*.user
+*.suo
 .vs/
+
+
 myshop.Web/appsettings.json
 myshop.Web/bin/Debug/net7.0/appsettings.json
 Removed_Files/

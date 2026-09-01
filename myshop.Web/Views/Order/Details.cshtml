@@ -1,0 +1,114 @@
+@using myshop.Web.Controllers
+@model OrderResponse
+@{
+	ViewData["Title"] = $"Order #{Model.Id}";
+
+	var statusClass = Model.Status switch
+	{
+		"Pending" => "badge-warning",
+		"Paid" or "Completed" => "badge-success",
+		"Cancelled" => "badge-danger",
+		_ => "badge-secondary"
+	};
+}
+
+<div class="container py-5">
+
+	<a asp-action="@nameof(OrderController.Index)" class="btn-link small mb-3 d-inline-block">&larr; Back to Orders</a>
+
+	<div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-3">
+		<div>
+			<h2 class="mb-1">Order #@Model.Id</h2>
+			<p class="text-muted mb-0">Placed on @Model.CreatedAt.ToString("MMMM dd, yyyy 'at' hh:mm tt")</p>
+		</div>
+		<span class="badge @statusClass rounded-pill px-3 py-2 fs-small">@Model.Status</span>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-8">
+
+			<div class="card mb-4">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Customer Information</h5>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-6 mb-3">
+							<p class="text-muted small mb-1">Full Name</p>
+							<p class="fw-semibold text-dark mb-0">@Model.CustomerName</p>
+						</div>
+						<div class="col-6 mb-3">
+							<p class="text-muted small mb-1">Phone</p>
+							<p class="fw-semibold text-dark mb-0">@Model.Phone</p>
+						</div>
+						<div class="col-6 mb-3">
+							<p class="text-muted small mb-1">City</p>
+							<p class="fw-semibold text-dark mb-0">@Model.City</p>
+						</div>
+						<div class="col-6 mb-3">
+							<p class="text-muted small mb-1">Address</p>
+							<p class="fw-semibold text-dark mb-0">@Model.Address</p>
+						</div>
+						@if (!string.IsNullOrWhiteSpace(Model.OrderNotes))
+						{
+							<div class="col-12">
+								<p class="text-muted small mb-1">Order Notes</p>
+								<p class="text-dark mb-0">@Model.OrderNotes</p>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+
+			<div class="card" style="margin-bottom:24px;">
+				<div class="card-header">
+					<h5 class="card-title mb-0">Order Items (@Model.OrderItems.Count)</h5>
+				</div>
+				<div class="card-body">
+					@foreach (var item in Model.OrderItems)
+					{
+						<div class="cart-item">
+							<img src="/@(string.IsNullOrEmpty(item.ImageURL) ? "/images/placeholder.png" : item.ImageURL)"
+								 alt="@item.ProductName" />
+							<div class="cart-item-info">
+								<h5>@item.ProductName</h5>
+								<p class="text-muted small mb-0">
+									@item.Price.ToString("C") &times; @item.Quantity
+								</p>
+							</div>
+							<div class="text-end">
+								<p class="fw-bold text-primary mb-0 fs-5">
+									@((item.Price * item.Quantity).ToString("C"))
+								</p>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-lg-4">
+			<div class="order-summary">
+				<h5>Order Summary</h5>
+				<div class="summary-row">
+					<span>Subtotal</span>
+					<span>@Model.Subtotal.ToString("C")</span>
+				</div>
+				<div class="summary-row">
+					<span>Shipping</span>
+					<span>@Model.Shipping.ToString("C")</span>
+				</div>
+				<div class="summary-row">
+					<span>Tax</span>
+					<span>@Model.Tax.ToString("C")</span>
+				</div>
+				<div class="summary-total">
+					<span>Total</span>
+					<span>@Model.Total.ToString("C")</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

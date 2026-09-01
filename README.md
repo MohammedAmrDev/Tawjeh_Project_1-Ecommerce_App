@@ -1,3 +1,15 @@
+### Sprint Three
+## Notes
+- New UI update, (Using AI)
+- Stripe Payment added
+
+## Setting up
+- Add the SMTP settings
+- Add the Stripe secret key (Strip:SecretKey)
+
+
+### Sprint Two
+
 ## Setting up configurations
 - [ ] Set up the connection string
 - [ ] Set up SMTP mail settings for email confirmation (implements options pattern, `MailSetting` model in `Models/Settings/`)

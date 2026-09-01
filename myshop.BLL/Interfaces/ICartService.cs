@@ -12,6 +12,6 @@ namespace myshop.BLL.Interfaces
 		Task<int> IncreaseQuantity(int id);
 		Task<int> DecreaseQuantity(int id);
 		void ClearCart();
-		Task<double> GetTotalPrice();
+		Task<double> GetTotalPriceAsync();
 	}
 }

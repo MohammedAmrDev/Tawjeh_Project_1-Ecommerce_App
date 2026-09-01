@@ -5,150 +5,112 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - ShopHub</title>
 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/modern.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/myshop.Web.styles.css" asp-append-version="true" />
 	<style>
-			body {
-				background: linear-gradient(135deg,#eef2f7 0%,#d9e4f5 40%,#c3dafe 100%);
-				margin: 0;
-				animation: fadeIn .8s ease;
-			}
+		body {
+			margin: 0;
+			animation: fadeIn 0.8s ease;
+		}
 
-			@@keyframes fadeIn {
-				from {
-					opacity: 0;
-				}
+		@@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
 
-				to {
-					opacity: 1;
-				}
-			}
+		.cart-items-num:empty {
+			display: none;
+		}
 
-			.logo {
-				background: linear-gradient(135deg,#00c6ff,#0072ff);
-				color: white !important;
-				padding: .65rem 1.25rem;
-				margin-right: 20px;
-				border-radius: 14px;
-				text-decoration: none;
-				font-weight: 600;
-				transition: .3s;
-				box-shadow: 0 4px 12px rgba(0,0,0,.15);
-			}
-
-			.categories-tags {
-				border-top: 1px solid #d3d3d3;
-				border-bottom: 1px solid #d3d3d3;
-			}
-
-			.btn-custom {
-				background: linear-gradient(45deg, #6366f1, #8b5cf6);
-				border: none;
-				transition: all 0.3s ease;
-			}
-
-			.btn-custom:hover {
-			   transform: translateY(-2px);
-			   box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
-			}
-
-			footer {
-				background: linear-gradient(90deg,#111,#1b1b1b);
-				color: white;
-				padding: 1.2rem 0;
-				border-top-left-radius: 12px;
-				border-top-right-radius: 12px;
-			}
-
-			footer a {
-			   color: white;
-			   text-decoration: none;
-			}
-
-			footer a:hover {
-			   text-decoration: underline;
-			}
-
-			.div-info {
-				display: flex;
-				align-items: center;
-			}
-
-			.cart-items-num:empty {
-				display: none;
-			}
-
-			.pagination li.active {
-				pointer-events: none;
-			}
-			.products-container span.msg {
-				color: #0000003b;
-				display: none;
-				margin: auto;
-				font-size: 4em;
-			}
-			.products-container:not(:has(.product-card)) span.msg {
-				display: block;
-			}
-			.products-container:not(:has(.product-card)) + div .container .pagination {
-				display: none;
-			}
+		.products-container span.msg {
+			color: var(--color-text-dim);
+			display: none;
+			margin: auto;
+			font-size: 4em;
+		}
+		.products-container:not(:has(.product-card)) span.msg {
+			display: block;
+		}
+		.products-container:not(:has(.product-card)) + div .container .pagination {
+			display: none;
+		}
 	</style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-	<header class="p-3 bg-light text-white">
+	<header class="site-header">
 		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-				<a class="logo" asp-controller="Home" asp-action="Index">ShopHub</a>
-				@if (!Context.Request.Path.ToString().Contains("/Account/"))
-				{
-					<ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0 me-lg-auto">
-						<li><a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-secondary">Products</a></li>
-						<li>
-							<a asp-controller="Cart" asp-action="Index" class="nav-link px-2 text-secondary">
-								Cart
-								<span class="badge bg-primary cart-items-num" id="cartItemsNum">@ViewData["CartItemsNum"]</span>
-							</a>
-						</li>
-						<li>
-							<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="@Context.Request.QueryString" method="get">
-								<input type="search" name="searchBy" value="@Context.Request.Query["searchBy"].ToString()" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-								@foreach (var query in Context.Request.Query)
-								{
-									if (query.Key != "pageIndex" && query.Key != "searchBy")
-									{
-										<input type="hidden" name="@query.Key" value="@query.Value" />
-									}
-								}
-							</form>
-						</li>
-					</ul>
-				}
-				<div class="text-end d-flex gap-2" style="margin-left: auto;">
-					<partial name="_LoginPartial" />
+			<a class="site-logo" asp-controller="Home" asp-action="Index">ShopHub</a>
+
+			@if (!Context.Request.Path.ToString().Contains("/Account/"))
+			{
+				<button class="site-hamburger" id="siteHamburger" aria-label="Toggle navigation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+
+				<div class="site-search">
+					<form action="@Context.Request.QueryString" method="get">
+						<input type="search" name="searchBy" value="@Context.Request.Query["searchBy"].ToString()" placeholder="Search products..." aria-label="Search">
+						@foreach (var query in Context.Request.Query)
+						{
+							if (query.Key != "pageIndex" && query.Key != "searchBy")
+							{
+								<input type="hidden" name="@query.Key" value="@query.Value" />
+							}
+						}
+					</form>
 				</div>
+			
+				<nav class="site-nav" id="siteNav">
+					<ul class="site-nav-list">
+						<li>
+							<a asp-controller="Home" asp-action="Index" class="nav-link @(Context.Request.Path == "/" ? "active" : "")">Products</a>
+						</li>
+					    <li>
+							<a asp-controller="Cart" asp-action="Index" class="nav-link @(Context.Request.Path.ToString().Contains("Cart") ? "active" : "")">
+							    <i class="fa-solid fa-cart-shopping"></i> Cart
+							    <span class="cart-badge" id="cartItemsNum">@ViewData["CartItemsNum"]</span>
+						    </a>
+					    </li>
+						@if (User.Identity is not null && User.Identity.IsAuthenticated)
+						   {
+							  <li>
+								 <a asp-controller="Order" asp-action="Index" class="nav-link @(Context.Request.Path.ToString().Contains("Order") ? "active" : "")">
+									<i class="fa-solid fa-box-open"></i> My Orders
+								 </a>
+							  </li>
+						   }
+						</ul>
+				</nav>
+			}
+
+			<div class="site-auth">
+				<partial name="_LoginPartial" />
 			</div>
 		</div>
 	</header>
 
-	<main class="flex-grow-1">
+	<main class="flex-grow-1 site-main">
 		@RenderBody()
 	</main>
 
-	<footer class="mt-auto">
-		<div class="container text-center">
-			&copy; @DateTime.Now.Year - myshop.Web
+	<footer class="site-footer">
+		<div class="container">
+			&copy; @DateTime.Now.Year - ShopHub. All rights reserved.
 		</div>
 	</footer>
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/modern.js" asp-append-version="true"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	@await RenderSectionAsync("Scripts", required: false)
 
