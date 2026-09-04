@@ -50,7 +50,7 @@ namespace myshop.Web.Controllers
 
 			// Add order so it can be accessed from different actions
 			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var orderResponse = await _orderService.AddOrderAsync(checkoutViewModel.DeliveryInfo, totalPrice, cartItems, userId);
+			var orderResponse = await _orderService.AddOrderAsync(checkoutViewModel.DeliveryInfo.ToDTO(), totalPrice, cartItems, userId);
 			_cartService.ClearCart();
 
 			if (checkoutViewModel.PaymentMethod == PaymentTypeEnum.Strip)

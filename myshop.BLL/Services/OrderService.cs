@@ -14,16 +14,16 @@ namespace myshop.BLL.Services
 			_uow = uow;
 		}
 
-		public async Task<OrderResponse> AddOrderAsync(CheckoutRequest checkoutRequest, double totalPrice, List<CartItemResponse> cartItems, string? userId)
+		public async Task<OrderResponse> AddOrderAsync(DeliveryInfoDTO deliveryInfo, double totalPrice, List<CartItemResponse> cartItems, string? userId)
 		{
 			Order orderEntity = new Order
 			{
 				UserId = userId is not null ? Guid.Parse(userId) : null,
-				CustomerName = checkoutRequest.CustomerName,
-				Phone = checkoutRequest.Phone,
-				Address = checkoutRequest.Address,
-				City = checkoutRequest.City,
-				OrderNotes = checkoutRequest.OrderNotes,
+				CustomerName = deliveryInfo.CustomerName,
+				Phone = deliveryInfo.Phone,
+				Address = deliveryInfo.Address,
+				City = deliveryInfo.City,
+				OrderNotes = deliveryInfo.OrderNotes,
 
 				Subtotal = totalPrice,
 				Shipping = 0,

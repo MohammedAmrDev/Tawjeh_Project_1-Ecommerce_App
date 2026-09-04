@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using myshop.Models.Entities;
-using myshop.Models.IdentityEntities;
 
 namespace myshop.DAL.Data.Configurations
 {
@@ -9,7 +8,11 @@ namespace myshop.DAL.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Review> builder)
 		{
-			
+			builder.Property(p => p.Comment).HasMaxLength(150);
+			builder.ToTable(t => t.HasCheckConstraint(
+				name: "Rate_Range",
+				sql: "[Rate] >= 0 AND [Rate] <= 5"
+			));
 		}
 	}
 }

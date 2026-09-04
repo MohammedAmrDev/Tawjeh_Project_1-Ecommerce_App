@@ -7,7 +7,7 @@ namespace myshop.Models.ViewModels
 	{
 		public List<CartItemResponse> CartItems { get; set; } = new();
 		public double TotalPrice { get; set; }
-		public CheckoutRequest DeliveryInfo { get; set; } = new();
+		public DeliveryInfoViewModel DeliveryInfo { get; set; } = new();
 		public PaymentTypeEnum PaymentMethod { get; set; } = PaymentTypeEnum.COD;
 	}
 }

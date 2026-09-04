@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace myshop.Models.DTOs
+namespace myshop.Models.ViewModels
 {
-	public class CheckoutRequest
+	public class DeliveryInfoViewModel
 	{
 		[Required(ErrorMessage = "Customer name is required.")]
 		[StringLength(50)]

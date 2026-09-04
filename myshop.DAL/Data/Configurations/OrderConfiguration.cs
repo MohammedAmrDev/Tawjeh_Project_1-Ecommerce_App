@@ -1,19 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using myshop.Models.Entities;
-using myshop.Models.IdentityEntities;
 
 namespace myshop.DAL.Data.Configurations
 {
-	internal class ProductConfiguration : IEntityTypeConfiguration<Product>
+	internal class OrderConfiguration : IEntityTypeConfiguration<Order>
 	{
-		public void Configure(EntityTypeBuilder<Product> builder)
+		public void Configure(EntityTypeBuilder<Order> builder)
 		{
-			builder.Property(p => p.Name).IsRequired();
-			builder.Property(p => p.ImageURL).HasAnnotation("DisplayName", "Image");
-			builder.Property(p => p.Price).IsRequired();
-			builder.Property(p => p.CategoryId).IsRequired().HasAnnotation("DisplayName", "Category");
-			builder.HasQueryFilter(p => !p.IsDeleted);
+
 		}
 	}
 }
