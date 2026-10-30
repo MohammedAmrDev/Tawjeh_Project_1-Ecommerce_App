@@ -1,6 +1,6 @@
 ﻿namespace myshop.Models.Entities
 {
-	public interface IGenericEntity
+	public abstract class GenericEntity
 	{
         public int Id { get; set; }
 		public DateTimeOffset CreatedAt { get; set; }

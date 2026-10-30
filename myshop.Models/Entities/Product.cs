@@ -2,12 +2,8 @@
 
 namespace myshop.Models.Entities
 {
-	public class Product : IGenericEntity, ISoftDeletableEntity
+	public class Product : GenericEntity, ISoftDeletableEntity
     {
-		public int Id { get; set; }
-		public DateTimeOffset CreatedAt { get; set; }
-		public DateTimeOffset UpdatedAt { get; set; }
-
 		public bool IsDeleted { get; set; }
 
 		public string Name { get; set; }

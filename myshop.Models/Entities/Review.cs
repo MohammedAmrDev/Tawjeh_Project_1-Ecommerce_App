@@ -1,11 +1,7 @@
 ﻿namespace myshop.Models.Entities
 {
-	public class Review : IGenericEntity
+	public class Review : GenericEntity
 	{
-		public int Id { get; set; }
-		public DateTimeOffset CreatedAt { get; set; }
-		public DateTimeOffset UpdatedAt { get; set; }
-
 		public ushort Rate { get; set; }
 		public string? Comment { get; set; }
 		public Guid UserId { get; set; }

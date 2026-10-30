@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace myshop.DAL.Interfaces
 {
-	public interface IGenericRepository<T> where T : class, IGenericEntity
+	public interface IGenericRepository<T> where T : GenericEntity
 	{
 		Task<int> GetCountAsync();
 		Task<List<T>> GetAllForDataTableAsync(Expression<Func<T, bool>>? filter, string? orderBy, string? orderDir, int start, int length, Expression<Func<T, object>>? include = null);

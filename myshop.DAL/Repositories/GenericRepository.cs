@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace myshop.DAL.Repositories
 {
-	public abstract class GenericRepository<T> : IGenericRepository<T> where T : class, IGenericEntity
+	public abstract class GenericRepository<T> : IGenericRepository<T> where T : GenericEntity
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly DbSet<T> _dbSet;

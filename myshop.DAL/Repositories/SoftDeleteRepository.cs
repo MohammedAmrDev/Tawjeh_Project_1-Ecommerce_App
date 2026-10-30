@@ -5,7 +5,7 @@ using myshop.Models.Entities;
 
 namespace myshop.DAL.Repositories
 {
-	public class SoftDeleteRepository<T> : GenericRepository<T>, ISoftDeleteRepository<T> where T : class, IGenericEntity, ISoftDeletableEntity
+	public class SoftDeleteRepository<T> : GenericRepository<T>, ISoftDeleteRepository<T> where T : GenericEntity, ISoftDeletableEntity
 	{
 		private readonly ApplicationDbContext _context;
 

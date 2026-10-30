@@ -2,6 +2,15 @@
 [Bb]in/
 [Oo]bj/
 
+# Client-side libraries are loaded from CDNs (see _Layout.cshtml / _Dashboard.cshtml)
+myshop.Web/wwwroot/lib/
+myshop.Web/wwwroot/plugins/
+myshop.Web/wwwroot/css/alt/
+myshop.Web/wwwroot/css/adminlte*.css
+myshop.Web/wwwroot/js/adminlte*.js
+myshop.Web/wwwroot/js/pages/
+*.map
+
 # Visual Studio user files
 *.user
 *.suo

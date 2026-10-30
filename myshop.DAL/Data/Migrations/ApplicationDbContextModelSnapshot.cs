@@ -180,7 +180,7 @@ namespace myshop.DAL.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("myshop.Models.Entities.Order", b =>
@@ -241,7 +241,7 @@ namespace myshop.DAL.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("myshop.Models.Entities.OrderItem", b =>
@@ -275,7 +275,7 @@ namespace myshop.DAL.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("myshop.Models.Entities.Product", b =>
@@ -319,7 +319,7 @@ namespace myshop.DAL.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("myshop.Models.Entities.Review", b =>
@@ -350,7 +350,7 @@ namespace myshop.DAL.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("myshop.Models.IdentityEntities.ApplicationUser", b =>

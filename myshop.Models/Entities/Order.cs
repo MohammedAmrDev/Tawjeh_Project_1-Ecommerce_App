@@ -1,11 +1,7 @@
 ﻿namespace myshop.Models.Entities
 {
-	public class Order : IGenericEntity
+	public class Order : GenericEntity
 	{
-		public int Id { get; set; }
-		public DateTimeOffset CreatedAt { get; set; }
-		public DateTimeOffset UpdatedAt { get; set; }
-
 		public Guid? UserId { get; set; }
 		public string CustomerName { get; set; } = string.Empty;
 		public string Phone { get; set; } = string.Empty;
